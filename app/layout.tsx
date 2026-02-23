@@ -18,7 +18,7 @@ export default function RootLayout({
 
         {/* HEADER */}
         <header className="sticky top-0 z-50 bg-[#f8f6f2]/95 backdrop-blur-md border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
+          <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
 
 
@@ -31,7 +31,7 @@ export default function RootLayout({
                   width={0}
                   height={0}
                   sizes="100vw"
-                  className="h-44 w-auto bg-[#f8f6f2] object-bottom"
+                  className="h-16 w-auto bg-[#f8f6f2]"
                   priority
                 />
               </div>

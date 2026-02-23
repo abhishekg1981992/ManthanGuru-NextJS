@@ -24,6 +24,59 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SERVICES SECTION */}
+      <section id="services" className="py-24 px-6 bg-white">
+        <div className="max-w-6xl mx-auto text-center">
+
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-800">
+            Our Insurance Solutions
+          </h2>
+
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            Comprehensive protection plans designed to secure every stage of your life.
+          </p>
+
+          <div className="mt-16 grid md:grid-cols-4 gap-8">
+
+            <div className="p-6 rounded-xl border border-gray-200 hover:shadow-lg transition">
+              <h3 className="text-xl font-semibold mb-3 text-blue-700">
+                Term Insurance
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Financial security for your family in case of unforeseen events.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl border border-gray-200 hover:shadow-lg transition">
+              <h3 className="text-xl font-semibold mb-3 text-blue-700">
+                Health Insurance
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Coverage for medical expenses and hospitalisation support.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl border border-gray-200 hover:shadow-lg transition">
+              <h3 className="text-xl font-semibold mb-3 text-blue-700">
+                Child Plans
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Secure your child’s education and future milestones.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl border border-gray-200 hover:shadow-lg transition">
+              <h3 className="text-xl font-semibold mb-3 text-blue-700">
+                Retirement Planning
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Build a steady income stream for a stress-free retirement.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
       {/* TRUST SECTION */}
       <section className="py-20 px-6 max-w-6xl mx-auto text-center">

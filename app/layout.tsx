@@ -1,6 +1,7 @@
 import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
+import Header from "./components/Header"; // we’ll create this
 
 export const metadata = {
   title: "Manthan Guru | Insurance Guidance for Families",
@@ -15,70 +16,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-white text-gray-800">
-
-        {/* HEADER */}
-        <header className="sticky top-0 z-50 bg-[#f8f6f2]/95 backdrop-blur-md border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-
-
-
-            {/* Logo */}
-            <Link href="/" className="flex items-center">
-              <div className="h-16 flex items-center overflow-hidden">
-                <Image
-                  src="/logo.png"
-                  alt="Manthan Guru Logo"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  className="h-16 w-auto bg-[#f8f6f2]"
-                  priority
-                />
-              </div>
-            </Link>
-
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-12 text-gray-700 text-[15px]">
-
-              <Link href="#services" className="relative group font-medium tracking-wide">
-                Services
-                <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-
-              <Link href="#about" className="relative group font-medium tracking-wide">
-                About
-                <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-
-              <Link href="#contact" className="relative group font-medium tracking-wide">
-                Contact
-                <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-
-              <div className="flex items-center gap-6 ml-6">
-                <span className="text-gray-600 font-semibold text-sm">
-                  📞 +91 98102 46109
-                </span>
-
-                <a
-                  href="https://wa.me/919810246109"
-                  target="_blank"
-                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full text-sm font-medium transition shadow-sm"
-                >
-                  WhatsApp
-                </a>
-              </div>
-
-            </nav>
-
-          </div>
-        </header>
-
-
-
-
+        <Header />
         {children}
-
+        {/* Floating WhatsApp Button */}
+        <a
+          href="https://wa.me/919810246109?text=Hi%20Manthan%20Guru,%20I%20would%20like%20to%20know%20more%20about%20insurance%20plans."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed bottom-6 right-6 z-[9999] bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg p-4 flex items-center justify-center transition transform hover:scale-110"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-6 h-6"
+          >
+            <path d="M20.52 3.48A11.91 11.91 0 0012.06 0C5.48 0 .12 5.36.12 11.94c0 2.1.55 4.15 1.6 5.97L0 24l6.24-1.63a11.91 11.91 0 005.82 1.49h.01c6.58 0 11.94-5.36 11.94-11.94 0-3.19-1.24-6.19-3.49-8.44z" />
+          </svg>
+        </a>
       </body>
     </html>
   );

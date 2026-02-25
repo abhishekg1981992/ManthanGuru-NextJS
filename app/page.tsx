@@ -1,4 +1,5 @@
 import { sendEmail } from "./actions/sendEmail";
+import ContactForm from "./components/ContactForm";
 
 export default function Home() {
   return (
@@ -249,52 +250,9 @@ export default function Home() {
             Get personalized guidance tailored to your family's financial needs.
           </p>
 
-          <form action={sendEmail} className="mt-12 space-y-6 text-left">
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Full Name
-              </label>
-              <input
-                name="name"
-                type="text"
-                className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                placeholder="Enter your full name"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Phone Number
-              </label>
-              <input
-                name="phone"
-                type="tel"
-                className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                placeholder="Enter your phone number"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Message
-              </label>
-              <textarea
-                name="message"
-                rows={4}
-                className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                placeholder="Tell us briefly about your requirement"
-              ></textarea>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full transition"
-            >
-              Request Consultation
-            </button>
-
-          </form>
+          <div className="mt-12">
+            <ContactForm />
+          </div>
 
         </div>
       </section>

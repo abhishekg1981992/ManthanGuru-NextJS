@@ -143,20 +143,25 @@ export default function Home() {
 
           {/* Founder Content */}
           <div>
+            <span className="inline-block bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full mb-4">
+              Serving Families Since 2004
+            </span>
             <h2 className="text-3xl md:text-4xl font-semibold text-gray-800">
               Meet Our Founder
             </h2>
 
             <p className="mt-6 text-gray-600 leading-relaxed">
-              With over <strong>20+ years of experience</strong> in the insurance
-              industry, our founder has helped hundreds of families secure their
-              financial future through personalized and transparent advisory.
+              Our founder began his journey in the insurance industry on
+              <strong> 1st January 2004</strong>. With over
+              <strong> 22 years of dedicated experience</strong>, he has guided
+              hundreds of families in securing their financial future through
+              honest advice and long-term relationships.
             </p>
 
             <p className="mt-4 text-gray-600 leading-relaxed">
-              At Manthan Guru, we believe insurance is not about selling policies —
-              it’s about building long-term relationships and providing genuine
-              financial protection.
+              At Manthan Guru, insurance is not about selling policies —
+              it’s about understanding your responsibilities, your goals,
+              and protecting what matters most to you.
             </p>
 
             <div className="mt-6">

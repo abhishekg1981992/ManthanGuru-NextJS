@@ -135,7 +135,7 @@ export default function Home() {
             <div className="w-72 h-72 bg-gray-200 rounded-xl overflow-hidden shadow-md">
               <img
                 src="/founder.jpg"
-                alt="Founder - Manthan Guru"
+                alt="Mr. Arun Kumar Gupta - Founder"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -147,29 +147,29 @@ export default function Home() {
               Serving Families Since 2004
             </span>
             <h2 className="text-3xl md:text-4xl font-semibold text-gray-800">
-              Meet Our Founder
+              Meet Mr. Arun Kumar Gupta
             </h2>
 
             <p className="mt-6 text-gray-600 leading-relaxed">
-              Our founder began his journey in the insurance industry on
+              Mr. Arun Kumar Gupta began his journey in the insurance industry on
               <strong> 1st January 2004</strong>. With over
-              <strong> 22 years of dedicated experience</strong>, he has guided
-              hundreds of families in securing their financial future through
-              honest advice and long-term relationships.
+              <strong> 22 years of dedicated experience</strong>, he has helped
+              hundreds of families secure their financial future through honest advice
+              and long-term relationships.
             </p>
 
             <p className="mt-4 text-gray-600 leading-relaxed">
               At Manthan Guru, insurance is not about selling policies —
-              it’s about understanding your responsibilities, your goals,
-              and protecting what matters most to you.
+              it’s about understanding responsibilities, future goals, and protecting
+              what matters most to your family.
             </p>
 
-            <div className="mt-6">
+            <div className="mt-8">
               <a
                 href="https://wa.me/919810246109"
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full transition"
               >
-                Speak Directly with Founder
+                Speak Directly with Mr. Gupta
               </a>
             </div>
           </div>
@@ -219,17 +219,79 @@ export default function Home() {
 
       {/* EMOTIONAL CTA SECTION */}
       <section className="bg-blue-600 py-16 text-center text-white px-6">
-        <h2 className="text-3xl font-bold">
-          Because Your Family Deserves Financial Security
+        <h2>
+          Ready to Secure Your Family’s Future?
         </h2>
 
-        <p className="mt-4 text-lg max-w-2xl mx-auto">
-          Let’s discuss your goals and build a protection plan that gives you peace of mind.
+        <p>
+          Speak with Mr. Arun Kumar Gupta today and take the first step toward financial peace of mind.
         </p>
 
-        <button className="mt-6 bg-white text-blue-600 px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 transition shadow-md">
-          Book a Free Call Today
-        </button>
+        <a
+          href="#contact"
+          className="mt-6 inline-block bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition"
+        >
+          Book a Free Consultation
+        </a>
+      </section>
+
+      {/* CONTACT SECTION */}
+      <section id="contact" className="py-24 px-6 bg-[#f8f6f2]">
+        <div className="max-w-4xl mx-auto text-center">
+
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-800">
+            Book a Free Consultation
+          </h2>
+
+          <p className="mt-4 text-gray-600">
+            Get personalized guidance tailored to your family's financial needs.
+          </p>
+
+          <form className="mt-12 space-y-6 text-left">
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Full Name
+              </label>
+              <input
+                type="text"
+                className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                placeholder="Enter your full name"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                placeholder="Enter your phone number"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Message
+              </label>
+              <textarea
+                rows={4}
+                className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                placeholder="Tell us briefly about your requirement"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full transition"
+            >
+              Request Consultation
+            </button>
+
+          </form>
+
+        </div>
       </section>
 
     </main>

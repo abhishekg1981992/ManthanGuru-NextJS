@@ -1,3 +1,5 @@
+import { sendEmail } from "./actions/sendEmail";
+
 export default function Home() {
   return (
     <main className="bg-white text-gray-800">
@@ -247,13 +249,14 @@ export default function Home() {
             Get personalized guidance tailored to your family's financial needs.
           </p>
 
-          <form className="mt-12 space-y-6 text-left">
+          <form action={sendEmail} className="mt-12 space-y-6 text-left">
 
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Full Name
               </label>
               <input
+                name="name"
                 type="text"
                 className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 placeholder="Enter your full name"
@@ -265,6 +268,7 @@ export default function Home() {
                 Phone Number
               </label>
               <input
+                name="phone"
                 type="tel"
                 className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 placeholder="Enter your phone number"
@@ -276,6 +280,7 @@ export default function Home() {
                 Message
               </label>
               <textarea
+                name="message"
                 rows={4}
                 className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 placeholder="Tell us briefly about your requirement"

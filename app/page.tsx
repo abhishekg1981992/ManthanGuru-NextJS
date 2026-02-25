@@ -78,6 +78,54 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TESTIMONIALS */}
+      <section className="py-24 px-6 bg-[#f8f6f2]">
+        <div className="max-w-6xl mx-auto text-center">
+
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-800">
+            What Our Clients Say
+          </h2>
+
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            Families who trusted us with their financial protection.
+          </p>
+
+          <div className="mt-16 grid md:grid-cols-3 gap-8">
+
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+              <p className="text-gray-600 text-sm">
+                “Manthan Guru helped us choose the right term plan without confusion.
+                The entire process was transparent and stress-free.”
+              </p>
+              <h4 className="mt-4 font-semibold text-gray-800">
+                – Rajesh Sharma
+              </h4>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+              <p className="text-gray-600 text-sm">
+                “Their guidance in selecting health insurance for my family was
+                extremely helpful. Highly professional service.”
+              </p>
+              <h4 className="mt-4 font-semibold text-gray-800">
+                – Neha Verma
+              </h4>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+              <p className="text-gray-600 text-sm">
+                “I appreciate the long-term support even after purchasing the policy.
+                Truly reliable and trustworthy advisors.”
+              </p>
+              <h4 className="mt-4 font-semibold text-gray-800">
+                – Amit Gupta
+              </h4>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* TRUST SECTION */}
       <section className="py-20 px-6 max-w-6xl mx-auto text-center">
         <h2 className="text-3xl font-bold mb-12">

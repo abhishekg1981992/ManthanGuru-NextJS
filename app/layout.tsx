@@ -2,6 +2,7 @@ import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "./components/Header"; // we’ll create this
+import Script from "next/script";
 
 export const metadata = {
   title: "Manthan Guru | Insurance Guidance for Families",
@@ -16,6 +17,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-white text-gray-800">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-H275RMS3YS"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-H275RMS3YS');
+          `}
+        </Script>
         <Header />
         {children}
         {/* FOOTER */}

@@ -15,6 +15,10 @@ export default function ContactForm() {
 
     setIsSubmitting(false);
     setIsSuccess(true);
+    window.gtag?.('event', 'form_submission', {
+      event_category: 'engagement',
+      event_label: 'Consultation Form',
+    });
   }
 
   return (

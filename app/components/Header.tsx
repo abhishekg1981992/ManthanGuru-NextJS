@@ -30,7 +30,7 @@ export default function Header() {
           <Link href="#about">About</Link>
           <Link href="#contact">Contact</Link>
 
-          <a href="tel:+919810246109" className="font-medium">
+          <a href="tel:+919810246109" className="font-semibold text-gray-800">
             📞 +91 98102 46109
           </a>
         </nav>

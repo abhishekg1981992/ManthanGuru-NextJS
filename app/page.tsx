@@ -8,13 +8,12 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section className="bg-gradient-to-b from-blue-50 to-white py-24 px-6 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-          Protect Your Family’s Future with Confidence
+        <h1 className="text-4xl md:text-5xl font-semibold text-gray-800">
+          Trusted Insurance Advisor Since 2004
         </h1>
 
-        <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-          We help families and salaried professionals choose the right insurance —
-          simple, transparent and stress-free.
+        <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
+          Simple, honest insurance guidance for salaried professionals and business owners — wherever you are in India.
         </p>
 
         <div className="mt-8 flex justify-center gap-4 flex-wrap">

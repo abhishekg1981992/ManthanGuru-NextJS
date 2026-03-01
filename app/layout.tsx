@@ -4,28 +4,39 @@ import Image from "next/image";
 import Header from "./components/Header"; // we’ll create this
 import Script from "next/script";
 import WhatsAppButton from "./components/WhatsAppButton";
-// export const metadata = {
-//   title: "Manthan Guru | Insurance Guidance for Families",
-//   description: "Trusted insurance advice for families and salaried professionals.",
-// };
-
 export const metadata = {
-  title: "Insurance Advisor Since 2004 | Term & Health Insurance Consultant | Manthan Guru",
+  title:
+    "Insurance Advisor Since 2004 | Term & Health Insurance Consultant Across India | Manthan Guru",
   description:
-    "Trusted insurance advisor serving salaried individuals and business owners since 2004. Expert guidance on term insurance, health insurance, and financial protection planning.",
+    "Serving salaried professionals and business owners across India since 2004. Expert guidance on term insurance, health insurance, and personalized financial protection planning.",
   openGraph: {
     title:
-      "Insurance Advisor Since 2004 | Term & Health Insurance Consultant | Manthan Guru",
+      "Insurance Advisor Since 2004 | Manthan Guru",
     description:
-      "Serving families since 2004. Personalized insurance planning for salaried professionals and business owners.",
+      "Personalized insurance advisory for salaried individuals and business owners across India.",
     url: "https://www.manthanguru.com",
     siteName: "Manthan Guru",
     type: "website",
-    icons: {
-      icon: "./../public/logo.png",
-    }
   },
 };
+
+// export const metadata = {
+//   title: "Insurance Advisor Since 2004 | Term & Health Insurance Consultant | Manthan Guru",
+//   description:
+//     "Trusted insurance advisor serving salaried individuals and business owners since 2004. Expert guidance on term insurance, health insurance, and financial protection planning.",
+//   openGraph: {
+//     title:
+//       "Insurance Advisor Since 2004 | Term & Health Insurance Consultant | Manthan Guru",
+//     description:
+//       "Serving families since 2004. Personalized insurance planning for salaried professionals and business owners.",
+//     url: "https://www.manthanguru.com",
+//     siteName: "Manthan Guru",
+//     type: "website",
+//     icons: {
+//       icon: "./../public/logo.png",
+//     }
+//   },
+// };
 
 export default function RootLayout({
   children,
@@ -48,11 +59,7 @@ export default function RootLayout({
             gtag('config', 'G-H275RMS3YS');
           `}
         </Script>
-        <Script
-          id="schema"
-          type="application/ld+json"
-          strategy="afterInteractive"
-        >
+        <Script id="schema" type="application/ld+json" strategy="afterInteractive">
           {`
             {
               "@context": "https://schema.org",
@@ -64,6 +71,7 @@ export default function RootLayout({
                 "name": "Arun Kumar Gupta"
               },
               "foundingDate": "2004-01-01",
+              "areaServed": "India",
               "contactPoint": {
                 "@type": "ContactPoint",
                 "telephone": "+91-9810246109",

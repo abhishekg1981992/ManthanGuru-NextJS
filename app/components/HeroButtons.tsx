@@ -23,7 +23,7 @@ export default function HeroButtons() {
         onClick={trackConsultation}
         className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full transition text-center"
       >
-        Get Free Consultation
+        Get Free Advice
       </a>
 
       <a
@@ -33,7 +33,7 @@ export default function HeroButtons() {
         onClick={trackWhatsApp}
         className="inline-block bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full transition text-center"
       >
-        Talk on WhatsApp
+        Message Us on WhatsApp
       </a>
 
     </div>

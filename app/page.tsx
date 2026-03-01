@@ -238,6 +238,74 @@ export default function Home() {
         </a>
       </section>
 
+      {/* FAQ SECTION */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
+
+          <h2 className="text-3xl md:text-4xl font-semibold text-center text-gray-800">
+            Frequently Asked Questions
+          </h2>
+
+          <div className="mt-12 space-y-8">
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800">
+                How much life insurance cover do I actually need?
+              </h3>
+              <p className="mt-2 text-gray-600">
+                The required coverage depends on your income, liabilities, financial goals,
+                and family responsibilities. We analyze your complete financial profile
+                before recommending any plan.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800">
+                Is term insurance better than traditional plans?
+              </h3>
+              <p className="mt-2 text-gray-600">
+                For pure protection needs, term insurance is often the most cost-effective
+                solution. However, every individual’s situation is different, and we
+                guide you based on your goals.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800">
+                I am a business owner. Do I need separate insurance planning?
+              </h3>
+              <p className="mt-2 text-gray-600">
+                Yes. Business owners often require customized coverage for income
+                protection, liability, and future succession planning. We structure
+                solutions aligned with your business risks.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800">
+                Will you assist during claim settlement?
+              </h3>
+              <p className="mt-2 text-gray-600">
+                Absolutely. Our relationship does not end at policy purchase.
+                We actively support families during claims and renewals.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800">
+                Do you charge consultation fees?
+              </h3>
+              <p className="mt-2 text-gray-600">
+                Our initial consultation is completely free. We focus on understanding
+                your needs first before recommending any product.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
       {/* CONTACT SECTION */}
       <section id="contact" className="py-24 px-6 bg-[#f8f6f2]">
         <div className="max-w-4xl mx-auto text-center">

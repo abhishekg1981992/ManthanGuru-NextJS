@@ -50,22 +50,47 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 px-6 py-6 space-y-4">
-          <Link href="#services" onClick={() => setIsOpen(false)}>Services</Link>
-          <Link href="#about" onClick={() => setIsOpen(false)}>About</Link>
-          <Link href="#contact" onClick={() => setIsOpen(false)}>Contact</Link>
+        <div className="md:hidden bg-white border-t border-gray-200 px-6 py-6 flex flex-col gap-4">
 
-          <a href="tel:+919810246109" className="block font-medium">
+          <Link
+            href="#services"
+            onClick={() => setIsOpen(false)}
+            className="block w-full text-lg font-medium"
+          >
+            Services
+          </Link>
+
+          <Link
+            href="#about"
+            onClick={() => setIsOpen(false)}
+            className="block w-full text-lg font-medium"
+          >
+            About
+          </Link>
+
+          <Link
+            href="#contact"
+            onClick={() => setIsOpen(false)}
+            className="block w-full text-lg font-medium"
+          >
+            Contact
+          </Link>
+
+          <a
+            href="tel:+919810246109"
+            className="block w-full text-lg font-medium"
+          >
             📞 Call Us
           </a>
 
           <a
             href="https://wa.me/919810246109"
             target="_blank"
-            className="block bg-green-500 text-white text-center py-2 rounded-full"
+            className="block w-full bg-green-500 text-white text-center py-3 rounded-full mt-2"
           >
             WhatsApp
           </a>
+
         </div>
       )}
     </header>

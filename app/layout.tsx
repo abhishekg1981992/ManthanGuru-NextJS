@@ -18,6 +18,77 @@ export default function RootLayout({
       <body className="bg-white text-gray-800">
         <Header />
         {children}
+        {/* FOOTER */}
+        <footer className="bg-gray-900 text-gray-300 py-16 px-6 mt-24">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
+
+            {/* Brand */}
+            <div>
+              <h3 className="text-xl font-semibold text-white">
+                Manthan Guru
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed">
+                Trusted insurance guidance for salaried individuals and business owners.
+                Serving families since 2004 under the leadership of
+                <span className="text-white font-medium"> Mr. Arun Kumar Gupta</span>.
+              </p>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-3 text-sm">
+                <li>
+                  <a href="#services" className="hover:text-white transition">
+                    Services
+                  </a>
+                </li>
+                <li>
+                  <a href="#about" className="hover:text-white transition">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="#contact" className="hover:text-white transition">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contact Info */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Contact</h4>
+              <ul className="space-y-3 text-sm">
+                <li>
+                  📞 <a href="tel:+919810246109" className="hover:text-white transition">
+                    +91 98102 46109
+                  </a>
+                </li>
+                <li>
+                  ✉️ <a href="mailto:arungupta2009@yahoo.com" className="hover:text-white transition">
+                    arungupta2009@yahoo.com
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://wa.me/919810246109"
+                    target="_blank"
+                    className="text-green-400 hover:text-green-300 transition"
+                  >
+                    Chat on WhatsApp
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          {/* Bottom Line */}
+          <div className="mt-12 border-t border-gray-700 pt-6 text-center text-sm text-gray-400">
+            © {new Date().getFullYear()} Manthan Guru. All rights reserved.
+          </div>
+        </footer>
         {/* Floating WhatsApp Button */}
         <a
           href="https://wa.me/919810246109?text=Hi%20Manthan%20Guru,%20I%20would%20like%20to%20know%20more%20about%20insurance%20plans."

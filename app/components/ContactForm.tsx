@@ -6,8 +6,35 @@ import { sendEmail } from "../actions/sendEmail";
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
+
+  function validate(formData: FormData) {
+    const newErrors: { name?: string; phone?: string } = {};
+
+    const name = String(formData.get("name") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+
+    if (!name || name.length < 3) {
+      newErrors.name = "Please enter a valid name (min 3 characters).";
+    }
+
+    const phoneRegex = /^[6-9]\d{9}$/; // Indian 10-digit number
+    if (!phoneRegex.test(phone)) {
+      newErrors.phone = "Please enter a valid 10-digit mobile number.";
+    }
+
+    return newErrors;
+  }
 
   async function handleSubmit(formData: FormData) {
+    const validationErrors = validate(formData);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
     setIsSubmitting(true);
     setIsSuccess(false);
 
@@ -15,9 +42,11 @@ export default function ContactForm() {
 
     setIsSubmitting(false);
     setIsSuccess(true);
-    window.gtag?.('event', 'form_submission', {
-      event_category: 'engagement',
-      event_label: 'Consultation Form',
+
+    // GA Event
+    window.gtag?.("event", "form_submission", {
+      event_category: "engagement",
+      event_label: "Consultation Form",
     });
   }
 
@@ -31,6 +60,7 @@ export default function ContactForm() {
 
       <form action={handleSubmit} className="space-y-6 text-left">
 
+        {/* Name */}
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Full Name
@@ -38,12 +68,15 @@ export default function ContactForm() {
           <input
             name="name"
             type="text"
-            required
             className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             placeholder="Enter your full name"
           />
+          {errors.name && (
+            <p className="text-sm text-red-600 mt-1">{errors.name}</p>
+          )}
         </div>
 
+        {/* Phone */}
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Phone Number
@@ -51,19 +84,23 @@ export default function ContactForm() {
           <input
             name="phone"
             type="tel"
-            required
             className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            placeholder="Enter your phone number"
+            placeholder="Enter your 10-digit mobile number"
           />
+          {errors.phone && (
+            <p className="text-sm text-red-600 mt-1">{errors.phone}</p>
+          )}
         </div>
 
+        {/* Message */}
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Message
+            Message (Optional)
           </label>
           <textarea
             name="message"
             rows={4}
+            maxLength={500}
             className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             placeholder="Tell us briefly about your requirement"
           ></textarea>

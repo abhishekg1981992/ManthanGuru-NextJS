@@ -1,5 +1,6 @@
 import { sendEmail } from "./actions/sendEmail";
 import ContactForm from "./components/ContactForm";
+import HeroButtons from "./components/HeroButtons";
 
 export default function Home() {
   return (
@@ -17,13 +18,7 @@ export default function Home() {
         </p>
 
         <div className="mt-8 flex justify-center gap-4 flex-wrap">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-medium transition shadow-md">
-            Get Free Consultation
-          </button>
-
-          <button className="border border-blue-600 text-blue-600 px-8 py-3 rounded-full text-lg font-medium hover:bg-blue-50 transition">
-            Talk on WhatsApp
-          </button>
+          <HeroButtons />
         </div>
       </section>
 

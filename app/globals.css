@@ -27,3 +27,7 @@
   font-size: 18px;
   cursor: pointer;
 }
+
+html {
+  scroll-behavior: smooth;
+}

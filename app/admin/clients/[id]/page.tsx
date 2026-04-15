@@ -92,10 +92,15 @@ export default function ClientDetailPage() {
       const response = await fetch(url);
       if (!response.ok) throw new Error("Download failed");
       const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
+      const mimeType = blob.type || "application/octet-stream";
+      const typedBlob = new Blob([blob], { type: mimeType });
+      const downloadUrl = window.URL.createObjectURL(typedBlob);
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.download = filename;
+      // Ensure filename has extension derived from URL if missing
+      const urlExt = url.split("?")[0].split(".").pop();
+      const hasExt = filename.includes(".");
+      link.download = hasExt ? filename : `${filename}.${urlExt}`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -105,8 +110,21 @@ export default function ClientDetailPage() {
     }
   }
 
-  function handleView(url: string) {
-    window.open(url, "_blank", "width=1000,height=800");
+  async function handleView(url: string, filename?: string) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Failed to load document");
+      const blob = await response.blob();
+      const ext = filename?.split(".").pop()?.toLowerCase();
+      const mimeType = ext === "pdf" ? "application/pdf"
+        : blob.type && blob.type !== "application/octet-stream" ? blob.type
+        : "application/octet-stream";
+      const typedBlob = new Blob([blob], { type: mimeType });
+      const blobUrl = window.URL.createObjectURL(typedBlob);
+      window.open(blobUrl, "_blank");
+    } catch (err) {
+      alert((err as Error).message || "Failed to open document");
+    }
   }
 
   async function handleDeleteDoc(docId: number) {
@@ -310,7 +328,7 @@ export default function ClientDetailPage() {
                   {docUrl && (
                     <div className="flex items-center gap-2 shrink-0">
                       <button
-                        onClick={() => handleView(docUrl)}
+                        onClick={() => handleView(docUrl, doc.original_name || doc.filename)}
                         className="p-1.5 text-[#0b6b3a] hover:text-[#095a30] transition-colors cursor-pointer"
                         title="View"
                       >

@@ -101,3 +101,45 @@ export const api = {
   delete: <T>(endpoint: string) =>
     request<T>(endpoint, { method: "DELETE" }),
 };
+
+/**
+ * Extract an array from an API response that may be either a raw array
+ * or an object wrapping an array (e.g. { data: [...] }, { clients: [...] }).
+ */
+export function extractArray<T>(response: unknown): T[] {
+  if (Array.isArray(response)) return response;
+  if (response && typeof response === "object") {
+    const obj = response as Record<string, unknown>;
+    // Check common wrapper keys
+    for (const key of ["data", "clients", "policies", "claims", "renewals", "payments", "documents", "rows", "results", "items"]) {
+      if (Array.isArray(obj[key])) return obj[key] as T[];
+    }
+    // Fallback: return first array property found
+    for (const val of Object.values(obj)) {
+      if (Array.isArray(val)) return val as T[];
+    }
+  }
+  return [];
+}
+
+/**
+ * Format a date string (ISO timestamp or YYYY-MM-DD) to DD-MM-YYYY for display.
+ */
+export function formatDisplayDate(d?: string | null): string {
+  if (!d) return "—";
+  // Parse YYYY-MM-DD directly to avoid timezone shifts
+  const match = d.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (match) {
+    return `${match[3]}-${match[2]}-${match[1]}`;
+  }
+  try {
+    const date = new Date(d);
+    if (isNaN(date.getTime())) return d;
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  } catch {
+    return d;
+  }
+}

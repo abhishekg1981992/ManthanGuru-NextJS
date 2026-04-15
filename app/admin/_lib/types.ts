@@ -81,10 +81,18 @@ export interface Payment {
 export interface Document {
   id: number;
   client_id?: number;
+  policy_id?: number;
   claim_id?: number;
   filename: string;
+  original_name?: string;
   url?: string;
+  path?: string;
+  uploaded_at?: string;
   created_at?: string;
+}
+
+export interface PolicyWithDocuments extends Policy {
+  documents?: Document[];
 }
 
 export interface AuthResponse {

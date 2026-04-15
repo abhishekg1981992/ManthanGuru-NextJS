@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { api } from "../_lib/api";
+import { api, extractArray, formatDisplayDate } from "../_lib/api";
 import type { Claim } from "../_lib/types";
 import { Loader2, Search } from "lucide-react";
 
@@ -12,20 +12,13 @@ export default function ClaimsListPage() {
 
   useEffect(() => {
     api
-      .get<Claim[]>("/api/claims")
-      .then(setClaims)
+      .get("/api/claims")
+      .then((res) => setClaims(extractArray<Claim>(res)))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 
-  function formatDate(d?: string) {
-    if (!d) return "—";
-    const parts = d.split("-");
-    if (parts.length === 3) {
-      return `${parts[2]}-${parts[1]}-${parts[0]}`;
-    }
-    return d;
-  }
+  const formatDate = formatDisplayDate;
 
   const filtered = claims.filter((c) => {
     const q = search.toLowerCase();

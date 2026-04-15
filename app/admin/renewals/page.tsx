@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import { api } from "../_lib/api";
+import { api, extractArray, formatDisplayDate } from "../_lib/api";
 import type { Renewal } from "../_lib/types";
 import { Loader2, Phone } from "lucide-react";
 
@@ -14,17 +14,13 @@ export default function RenewalsPage() {
 
   useEffect(() => {
     api
-      .get<Renewal[]>("/api/renewals/due")
-      .then(setRenewals)
+      .get("/api/renewals/due")
+      .then((res) => setRenewals(extractArray<Renewal>(res)))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 
-  function formatDate(d?: string) {
-    if (!d) return "—";
-    const [y, m, day] = d.split("-");
-    return `${day}-${m}-${y}`;
-  }
+  const formatDate = formatDisplayDate;
 
   const filtered = useMemo(() => {
     const now = new Date();

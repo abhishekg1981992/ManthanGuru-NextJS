@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "./_lib/auth-context";
-import { api } from "./_lib/api";
+import { api, extractArray, formatDisplayDate } from "./_lib/api";
 import type { Client, Policy, Renewal } from "./_lib/types";
 import {
   Users,
@@ -30,11 +30,14 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function load() {
       try {
-        const [clients, policies, renDue] = await Promise.all([
-          api.get<Client[]>("/api/clients"),
-          api.get<Policy[]>("/api/policies/all-with-details"),
-          api.get<Renewal[]>("/api/renewals/due"),
+        const [clientsRaw, policiesRaw, renDueRaw] = await Promise.all([
+          api.get("/api/clients"),
+          api.get("/api/policies/all-with-details"),
+          api.get("/api/renewals/due"),
         ]);
+        const clients = extractArray<Client>(clientsRaw);
+        const policies = extractArray<Policy>(policiesRaw);
+        const renDue = extractArray<Renewal>(renDueRaw);
         setStats({
           clients: clients.length,
           policies: policies.length,
@@ -51,11 +54,7 @@ export default function AdminDashboard() {
     load();
   }, []);
 
-  function formatDate(d: string) {
-    if (!d) return "—";
-    const [y, m, day] = d.split("-");
-    return `${day}-${m}-${y}`;
-  }
+  const formatDate = formatDisplayDate;
 
   if (loading) {
     return (
@@ -154,7 +153,7 @@ export default function AdminDashboard() {
                         ? `₹${Number(r.premium_amount).toLocaleString("en-IN")}`
                         : "—"}
                     </td>
-                    <td className="py-2.5">{formatDate(r.end_date)}</td>
+                    <td className="py-2.5">{formatDisplayDate(r.end_date)}</td>
                   </tr>
                 ))}
               </tbody>

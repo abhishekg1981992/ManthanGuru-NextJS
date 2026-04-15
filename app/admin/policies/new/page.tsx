@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { api } from "../../_lib/api";
+import { api, extractArray } from "../../_lib/api";
 import type { Client } from "../../_lib/types";
 import { ArrowLeft, Loader2 } from "lucide-react";
 
@@ -36,7 +36,8 @@ export default function NewPolicyPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api.get<Client[]>("/api/clients").then((data) => {
+    api.get("/api/clients").then((res) => {
+      const data = extractArray<Client>(res);
       setClients(data);
       if (preselectedClientId) {
         const c = data.find((c) => String(c.id) === preselectedClientId);

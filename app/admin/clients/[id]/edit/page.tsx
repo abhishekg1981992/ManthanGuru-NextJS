@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { api } from "../../../_lib/api";
 import type { Client } from "../../../_lib/types";
 import { ArrowLeft, Loader2 } from "lucide-react";
@@ -9,6 +9,9 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 export default function EditClientPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from");
+  const backTarget = from === "details" ? `/admin/clients/${id}` : "/admin/clients";
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -25,6 +28,22 @@ export default function EditClientPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
+  /** Convert API yyyy-mm-dd (or ISO) to dd-mm-yyyy for display */
+  function apiToDdMmYyyy(val?: string | null): string {
+    if (!val) return "";
+    const match = val.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (match) return `${match[3]}-${match[2]}-${match[1]}`;
+    return val;
+  }
+
+  /** Convert dd-mm-yyyy back to yyyy-mm-dd for the API */
+  function ddMmYyyyToApi(val: string): string {
+    if (!val) return "";
+    const match = val.match(/^(\d{2})-(\d{2})-(\d{4})$/);
+    if (match) return `${match[3]}-${match[2]}-${match[1]}`;
+    return val;
+  }
+
   useEffect(() => {
     api
       .get<Client>(`/api/clients/${id}`)
@@ -37,7 +56,7 @@ export default function EditClientPage() {
           city: c.city || "",
           state: c.state || "",
           pincode: c.pincode || "",
-          dob: c.dob || "",
+          dob: apiToDdMmYyyy(c.dob),
           nominee: c.nominee || "",
           notes: c.notes || "",
         });
@@ -61,7 +80,7 @@ export default function EditClientPage() {
     setError("");
     setSubmitting(true);
     try {
-      await api.put(`/api/clients/${id}`, form);
+      await api.put(`/api/clients/${id}`, { ...form, dob: ddMmYyyyToApi(form.dob) });
       router.push(`/admin/clients/${id}`);
     } catch (err) {
       setError((err as Error).message || "Failed to update client");
@@ -82,7 +101,7 @@ export default function EditClientPage() {
     <div>
       <div className="flex items-center gap-3 mb-6">
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push(backTarget)}
           className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
         >
           <ArrowLeft size={20} />
@@ -139,7 +158,8 @@ export default function EditClientPage() {
               </label>
               <input
                 name="dob"
-                type="date"
+                type="text"
+                placeholder="dd-mm-yyyy"
                 value={form.dob}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#0b6b3a] focus:border-transparent outline-none"
@@ -217,7 +237,7 @@ export default function EditClientPage() {
           <div className="flex justify-end gap-3 pt-2">
             <button
               type="button"
-              onClick={() => router.back()}
+              onClick={() => router.push(backTarget)}
               className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
             >
               Cancel

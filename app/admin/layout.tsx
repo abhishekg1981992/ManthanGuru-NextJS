@@ -42,7 +42,7 @@ function Sidebar({
         />
       )}
       <aside
-        className={`fixed top-0 left-0 z-40 h-full w-64 bg-[#0b6b3a] text-white flex flex-col transition-transform lg:translate-x-0 ${
+        className={`fixed top-0 left-0 z-40 h-full w-64 bg-[#0b6b3a] text-white flex flex-col transition-transform lg:sticky lg:top-0 lg:h-screen lg:shrink-0 lg:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -118,10 +118,10 @@ function AdminShell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:flex">
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <div className="lg:ml-64">
+      <div className="min-w-0 lg:flex-1">
         <header className="sticky top-0 z-20 bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-4">
           <button
             onClick={() => setSidebarOpen(true)}

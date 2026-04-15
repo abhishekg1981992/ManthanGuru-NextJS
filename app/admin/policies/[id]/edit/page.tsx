@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { api } from "../../../_lib/api";
 import type { Policy } from "../../../_lib/types";
 import { ArrowLeft, Loader2 } from "lucide-react";
@@ -13,6 +13,9 @@ const STATUSES = ["active", "lapsed", "cancelled", "matured"] as const;
 export default function EditPolicyPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from");
+  const backTarget = from === "details" ? `/admin/policies/${id}` : "/admin/policies";
 
   const [form, setForm] = useState({
     provider: "",
@@ -90,7 +93,7 @@ export default function EditPolicyPage() {
     <div>
       <div className="flex items-center gap-3 mb-6">
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push(backTarget)}
           className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
         >
           <ArrowLeft size={20} />
@@ -229,7 +232,7 @@ export default function EditPolicyPage() {
           <div className="flex justify-end gap-3 pt-2">
             <button
               type="button"
-              onClick={() => router.back()}
+              onClick={() => router.push(backTarget)}
               className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
             >
               Cancel

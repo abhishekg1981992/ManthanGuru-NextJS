@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { api } from "../_lib/api";
+import { api, extractArray } from "../_lib/api";
 import type { Client } from "../_lib/types";
 import { useAuth } from "../_lib/auth-context";
 import { Plus, Search, Loader2, Trash2, Eye, Pencil } from "lucide-react";
@@ -16,8 +16,8 @@ export default function ClientsListPage() {
 
   useEffect(() => {
     api
-      .get<Client[]>("/api/clients")
-      .then(setClients)
+      .get("/api/clients")
+      .then((res) => setClients(extractArray<Client>(res)))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
@@ -107,7 +107,7 @@ export default function ClientsListPage() {
                           <Eye size={16} />
                         </Link>
                         <Link
-                          href={`/admin/clients/${c.id}/edit`}
+                          href={`/admin/clients/${c.id}/edit?from=list`}
                           className="p-1.5 text-gray-500 hover:text-blue-600 transition-colors"
                           title="Edit"
                         >

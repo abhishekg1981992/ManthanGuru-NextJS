@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { api } from "../../_lib/api";
+import { api, formatDisplayDate } from "../../_lib/api";
 import type { Client, Policy, Document } from "../../_lib/types";
 import { useAuth } from "../../_lib/auth-context";
 import {
@@ -13,11 +13,12 @@ import {
   Loader2,
   Upload,
   FileText,
-  ExternalLink,
+  Eye,
+  Download,
 } from "lucide-react";
 
 interface ClientDetail extends Client {
-  policies?: Policy[];
+  policies?: (Policy & { documents?: Document[] })[];
   documents?: Document[];
 }
 
@@ -29,6 +30,8 @@ export default function ClientDetailPage() {
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [deletingDocId, setDeletingDocId] = useState<number | null>(null);
+  const [docMessage, setDocMessage] = useState("");
 
   useEffect(() => {
     api
@@ -38,10 +41,12 @@ export default function ClientDetailPage() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  function formatDate(d?: string) {
-    if (!d) return "—";
-    const [y, m, day] = d.split("-");
-    return `${day}-${m}-${y}`;
+  const formatDate = formatDisplayDate;
+
+  function getDocUrl(doc: Document): string | null {
+    if (doc.url) return doc.url;
+    if (doc.path) return `https://mg-mobile-admin-production.up.railway.app/${doc.path.replace(/\\/g, "/")}`;
+    return null;
   }
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -71,6 +76,45 @@ export default function ClientDetailPage() {
     } catch (err) {
       alert((err as Error).message || "Delete failed");
       setDeleting(false);
+    }
+  }
+
+  async function handleDownload(url: string, filename: string) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Download failed");
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (err) {
+      alert((err as Error).message || "Download failed");
+    }
+  }
+
+  function handleView(url: string) {
+    window.open(url, "_blank", "width=1000,height=800");
+  }
+
+  async function handleDeleteDoc(docId: number) {
+    if (!confirm("Are you sure you want to delete this document?")) return;
+    setDeletingDocId(docId);
+    setDocMessage("");
+    try {
+      await api.delete(`/api/clients/doc/${docId}`);
+      setDocMessage("Document deleted successfully");
+      const updated = await api.get<ClientDetail>(`/api/clients/${id}`);
+      setClient(updated);
+      setTimeout(() => setDocMessage(""), 3000);
+    } catch (err) {
+      alert((err as Error).message || "Failed to delete document");
+    } finally {
+      setDeletingDocId(null);
     }
   }
 
@@ -111,7 +155,7 @@ export default function ClientDetailPage() {
           {client.name}
         </h2>
         <Link
-          href={`/admin/clients/${id}/edit`}
+          href={`/admin/clients/${id}/edit?from=details`}
           className="inline-flex items-center gap-2 bg-[#0b6b3a] hover:bg-[#095a30] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
         >
           <Pencil size={16} />
@@ -216,10 +260,10 @@ export default function ClientDetailPage() {
         )}
       </div>
 
-      {/* Documents */}
-      <div className="bg-white rounded-xl border border-gray-200 p-5">
+      {/* Client Documents */}
+      <div className="bg-white rounded-xl border border-gray-200 p-5 mb-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold text-gray-800">Documents</h3>
+          <h3 className="font-semibold text-gray-800">Client Documents</h3>
           <label className="inline-flex items-center gap-2 bg-[#0b6b3a] hover:bg-[#095a30] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer">
             {uploading ? (
               <Loader2 size={16} className="animate-spin" />
@@ -235,30 +279,83 @@ export default function ClientDetailPage() {
             />
           </label>
         </div>
+        {docMessage && (
+          <div className="bg-green-50 border border-green-200 text-green-700 text-sm rounded-lg px-4 py-2 mb-3">
+            {docMessage}
+          </div>
+        )}
         {(!client.documents || client.documents.length === 0) ? (
-          <p className="text-sm text-gray-500">No documents uploaded.</p>
+          <p className="text-sm text-gray-500">No client documents uploaded.</p>
         ) : (
           <div className="space-y-2">
-            {client.documents.map((doc) => (
-              <div
-                key={doc.id}
-                className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
-              >
-                <FileText size={18} className="text-gray-400 shrink-0" />
-                <span className="text-sm text-gray-700 flex-1 truncate">
-                  {doc.filename}
-                </span>
-                {doc.url && (
-                  <a
-                    href={doc.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#0b6b3a] hover:underline"
+            {client.documents.map((doc) => {
+              const docUrl = getDocUrl(doc);
+              return (
+                <div
+                  key={doc.id}
+                  className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
+                >
+                  <FileText size={18} className="text-gray-400 shrink-0" />
+                  <span className="text-sm text-gray-700 flex-1 truncate">
+                    {doc.original_name || doc.filename}
+                  </span>
+                  {docUrl && (
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={() => handleView(docUrl)}
+                        className="p-1.5 text-[#0b6b3a] hover:text-[#095a30] transition-colors cursor-pointer"
+                        title="View"
+                      >
+                        <Eye size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleDownload(docUrl, doc.original_name || doc.filename)}
+                        className="p-1.5 text-[#0b6b3a] hover:text-[#095a30] transition-colors cursor-pointer"
+                        title="Download"
+                      >
+                        <Download size={16} />
+                      </button>
+                    </div>
+                  )}
+                  <button
+                    onClick={() => handleDeleteDoc(doc.id)}
+                    disabled={deletingDocId === doc.id}
+                    className="p-1.5 text-gray-400 hover:text-red-600 transition-colors cursor-pointer disabled:opacity-50 shrink-0"
+                    title="Delete"
                   >
-                    <ExternalLink size={16} />
-                  </a>
-                )}
-              </div>
+                    {deletingDocId === doc.id ? (
+                      <Loader2 size={16} className="animate-spin" />
+                    ) : (
+                      <Trash2 size={16} />
+                    )}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Policy List */}
+      <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <h3 className="font-semibold text-gray-800 mb-4">Policy List</h3>
+        {(!client.policies || client.policies.length === 0) ? (
+          <p className="text-sm text-gray-500">No policies linked.</p>
+        ) : (
+          <div className="space-y-2">
+            {client.policies.map((p) => (
+              <Link
+                key={p.id}
+                href={`/admin/policies/${p.id}`}
+                className="block p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <div className="text-sm font-medium text-[#0b6b3a]">
+                  {p.policy_number}
+                </div>
+                <div className="text-xs text-gray-600 mt-1">
+                  {p.provider} • {p.policy_type || "—"}
+                </div>
+              </Link>
             ))}
           </div>
         )}

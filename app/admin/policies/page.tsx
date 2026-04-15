@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { api } from "../_lib/api";
+import { api, extractArray, formatDisplayDate } from "../_lib/api";
 import type { Policy } from "../_lib/types";
 import { useAuth } from "../_lib/auth-context";
 import { Plus, Search, Loader2, Trash2, Eye, Pencil } from "lucide-react";
@@ -16,17 +16,13 @@ export default function PoliciesListPage() {
 
   useEffect(() => {
     api
-      .get<Policy[]>("/api/policies/all-with-details")
-      .then(setPolicies)
+      .get("/api/policies/all-with-details")
+      .then((res) => setPolicies(extractArray<Policy>(res)))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 
-  function formatDate(d?: string) {
-    if (!d) return "—";
-    const [y, m, day] = d.split("-");
-    return `${day}-${m}-${y}`;
-  }
+  const formatDate = formatDisplayDate;
 
   const filtered = policies.filter((p) => {
     const q = search.toLowerCase();
@@ -143,7 +139,7 @@ export default function PoliciesListPage() {
                           <Eye size={16} />
                         </Link>
                         <Link
-                          href={`/admin/policies/${p.id}/edit`}
+                          href={`/admin/policies/${p.id}/edit?from=list`}
                           className="p-1.5 text-gray-500 hover:text-blue-600 transition-colors"
                           title="Edit"
                         >

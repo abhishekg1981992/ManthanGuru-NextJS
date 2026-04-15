@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { api } from "../../_lib/api";
+import { api, formatDisplayDate } from "../../_lib/api";
 import type { Policy } from "../../_lib/types";
 import { useAuth } from "../../_lib/auth-context";
 import { ArrowLeft, Pencil, Trash2, Loader2 } from "lucide-react";
@@ -24,11 +24,7 @@ export default function PolicyDetailPage() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  function formatDate(d?: string) {
-    if (!d) return "—";
-    const [y, m, day] = d.split("-");
-    return `${day}-${m}-${y}`;
-  }
+  const formatDate = formatDisplayDate;
 
   async function handleDelete() {
     if (!confirm("Are you sure you want to delete this policy?")) return;
@@ -90,7 +86,7 @@ export default function PolicyDetailPage() {
           Policy: {policy.policy_number}
         </h2>
         <Link
-          href={`/admin/policies/${id}/edit`}
+          href={`/admin/policies/${id}/edit?from=details`}
           className="inline-flex items-center gap-2 bg-[#0b6b3a] hover:bg-[#095a30] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
         >
           <Pencil size={16} />

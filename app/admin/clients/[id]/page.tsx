@@ -48,6 +48,9 @@ export default function ClientDetailPage() {
   function getDocUrl(doc: Document): string | null {
     if (doc.url) return doc.url;
     if (doc.path) {
+      // New uploads: Cloudinary HTTPS URL stored directly in path
+      if (doc.path.startsWith('http')) return doc.path;
+      // Legacy: relative path served by backend
       const cleanPath = doc.path.replace(/\\/g, "/").replace(/^\/?(app\/)?/, "");
       return `${API_BASE}/${cleanPath}`;
     }

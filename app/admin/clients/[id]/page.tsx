@@ -17,6 +17,8 @@ import {
   Download,
 } from "lucide-react";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "https://mg-mobile-admin-production.up.railway.app";
+
 interface ClientDetail extends Client {
   policies?: (Policy & { documents?: Document[] })[];
   documents?: Document[];
@@ -45,7 +47,10 @@ export default function ClientDetailPage() {
 
   function getDocUrl(doc: Document): string | null {
     if (doc.url) return doc.url;
-    if (doc.path) return `https://mg-mobile-admin-production.up.railway.app/${doc.path.replace(/\\/g, "/")}`;
+    if (doc.path) {
+      const cleanPath = doc.path.replace(/\\/g, "/").replace(/^\/?(app\/)?/, "");
+      return `${API_BASE}/${cleanPath}`;
+    }
     return null;
   }
 
